@@ -1,23 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// URL base de la API
-const API_URL = 'http://localhost:5000/api/auth';
 
 // Acción asincrónica para registrar un usuario
-export const registerUser = createAsyncThunk(
-  'register/registerUser',
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${API_URL}/register`, userData);
-      return response.data; // Se espera que el backend devuelva un mensaje de éxito.
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || 'Error desconocido durante el registro'
-      );
-    }
-  }
-);
+export const registerUser = createAsyncThunk('register/registerUser', async (userData) => {
+  const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+  return response.data;
+});
+
 
 // Slice
 const registerSlice = createSlice({

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, resetState } from '../slices/registerSlice';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../slices/authSlice';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -24,10 +25,16 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (!username || !password) {
-      alert('Por favor, completa todos los campos.');
+      alert('Por favor, completa todos los campos component.');
       return;
     }
     dispatch(registerUser({ username, password }));
+  };
+
+  const handleLogout = (e) => {
+   
+    dispatch(logout());
+    navigate('/login');
   };
 
   return (
@@ -75,7 +82,21 @@ const Register = () => {
         >
           Registrarse
         </button>
+        
       </form>
+      <button
+      onClick={handleLogout}
+          type="submit"
+          style={{
+            padding: '0.5rem 1rem',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          Logout
+        </button>
       <p style={{ marginTop: '1rem' }}>
         ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
       </p>

@@ -11,8 +11,10 @@ function App() {
   const { token } = useSelector((state) => state.auth);
 
   // Función para proteger rutas (redirige al login si no hay token)
-  const ProtectedRoute = ({ children }) => {
-    return token ? children : <Navigate to="/login" />;
+   const ProtectedRoute = ({ children }) => {
+    const { isAuthenticated } = useSelector((state) => state.auth);
+  
+    return isAuthenticated ? children : <Navigate to="/login" />;
   };
 
   return (
@@ -20,7 +22,6 @@ function App() {
       <div>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/registeru" element={<Register />} />
           <Route
             path="/register"
             element={

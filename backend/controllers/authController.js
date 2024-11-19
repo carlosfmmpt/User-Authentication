@@ -4,7 +4,7 @@ const { findUserByUsername, createUser } = require('../models/userModel');
 
 
 
-exports.login = (req, res) => {
+exports.login =  (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) return res.status(400).json({ message: 'Todos los campos son obligatorios' });
 
@@ -22,10 +22,10 @@ exports.login = (req, res) => {
 
 exports.register = async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+  if (!username || !password) return res.status(400).json({ message: 'Todos los campos son obligatorios tt' });
 
   findUserByUsername(username, async (err, results) => {
-    if (results.length > 0) return res.status(400).json({ message: 'El usuario ya existe' });
+    if (results.length > 0) return res.status(400).json({ message: 'El usuario ya existe backend' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     createUser({ username, password: hashedPassword }, (err) => {
