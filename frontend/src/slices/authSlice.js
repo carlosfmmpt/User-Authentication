@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const tokenFromStorage = localStorage.getItem('token');
+
 const initialState = {
-  isAuthenticated: false, // El estado inicial indica que no hay sesión activa
-  user: false,
-  token: false,
+  isAuthenticated: !!tokenFromStorage, // Verifica si el token existe
+  user: null,
+  token: tokenFromStorage || null,
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -21,6 +24,8 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null; // Limpiar error al hacer logout
+      localStorage.removeItem('token'); // Limpia el token
+
     },
     setError: (state, action) => {
       state.error = action.payload; // Establecer el mensaje de error

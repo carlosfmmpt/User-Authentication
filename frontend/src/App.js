@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginSuccess, logout } from './slices/authSlice';
+import axios from 'axios';
+import { useEffect } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
 //import Dashboard from './components/Dashboard';
@@ -9,6 +12,28 @@ import Register from './components/Register';
 function App() {
   // Obtenemos el estado de autenticación desde Redux
   const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+
+      // Opcional: Verifica si el token sigue siendo válido
+      axios
+        .get('http://localhost:5000/api/auth/validateToken', {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          const { user } = response.data;
+          dispatch(loginSuccess({ token, user }));
+        })
+        .catch(() => {
+          dispatch(logout());
+          localStorage.removeItem('token');
+        });
+    }
+  }, [dispatch]);
+
 
   // Función para proteger rutas (redirige al login si no hay token)
    const ProtectedRoute = ({ children }) => {
