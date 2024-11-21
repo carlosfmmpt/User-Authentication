@@ -28,6 +28,7 @@ const Register = () => {
       alert('Por favor, completa todos los campos component.');
       return;
     }
+    dispatch(resetState());
     dispatch(registerUser({ username, password }));
   };
 
@@ -38,69 +39,48 @@ const Register = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
-      <h1>Registro</h1>
-      {loading && <p>Registrando...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleRegister}>
-        <div style={{ marginBottom: '1rem' }}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+    <h1 className="text-2xl font-bold text-center text-gray-700">Registro de Usuario</h1>
+    {loading && <p>Registrando...</p>}
+    <form onSubmit={handleRegister} className="mt-6">
+        <div className="mb-4">
+          <label className="block text-gray-600 text-sm font-medium">Usuario</label>
           <input
             type="text"
-            placeholder="Nombre de usuario"
+            placeholder="Usuario"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{
-              padding: '0.5rem',
-              width: '100%',
-              marginBottom: '10px',
-              boxSizing: 'border-box',
-            }}
+            className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
-        <div style={{ marginBottom: '1rem' }}>
+        <div className="mb-4">
+          <label className="block text-gray-600 text-sm font-medium">Contraseña</label>
           <input
             type="password"
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{
-              padding: '0.5rem',
-              width: '100%',
-              boxSizing: 'border-box',
-            }}
+            className="w-full px-4 py-2 mt-2 text-gray-700 bg-gray-50 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           />
         </div>
         <button
           type="submit"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            cursor: 'pointer',
-          }}
+          className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
         >
-          Registrarse
+          Registrar
         </button>
-        
       </form>
-      <button
-      onClick={handleLogout}
-          type="submit"
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-        >
-          Logout
-        </button>
-      <p style={{ marginTop: '1rem' }}>
-        ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
-      </p>
-    </div>
+    {error && <p className="mt-4 text-sm text-center text-red-500">{error}</p>}
+    <button   type="submit" 
+    className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600" onClick={handleLogout}>
+        Logout
+      </button>
+    <p style={{ marginTop: '1rem' }}>
+      ¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a>
+    </p>
+  </div>
+</div>
   );
 };
 

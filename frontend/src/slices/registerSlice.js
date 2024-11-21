@@ -3,10 +3,22 @@ import axios from 'axios';
 
 
 // Acción asincrónica para registrar un usuario
-export const registerUser = createAsyncThunk('register/registerUser', async (userData) => {
-  const response = await axios.post('http://localhost:5000/api/auth/register', userData);
-  return response.data;
-});
+
+
+
+export const registerUser = createAsyncThunk(
+  'register/registerUser',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/register', userData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Error al registrar usuario'
+      );
+    }
+  }
+);
 
 
 // Slice

@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { findUserByUsername, createUser } = require('../models/userModel');
 
-
+ 
 
 exports.login =  (req, res) => {
   const { username, password } = req.body;
